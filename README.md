@@ -117,7 +117,7 @@ Leader listening for text on TCP 127.0.0.1:6666
 ...
 ```
 
-![Sistem Başlatma](./Distributed System Start-start.png)
+![Sistem Başlatma]([./Distributed System Start-start.png](https://github.com/ismailhakkituran/distributed-disk-register/blob/main/Distributed%20System%20Start-start.png))
 
 
 ### **Terminal 2, 3, 4… – Diğer Üyeler**
@@ -132,7 +132,7 @@ mvn exec:java -Dexec.mainClass=com.example.family.NodeMain
 ve aileye katılır.
 
 ---
-![Üyelerin aileye katılması](./Distributed System Start-family.png)
+![Üyelerin aileye katılması](https://github.com/ismailhakkituran/distributed-disk-register/blob/main/Distributed%20System%20Start-family.png)
 
 ## Mesaj Gönderme (TCP → Lider Üye)
 
@@ -156,7 +156,7 @@ Mesaj yaz:
 Merhaba distributed world!
 ```
 
-![Mesajın dağıtılması](./Distributed System Start-telnet.png)
+![Mesajın dağıtılması](![Sistem Başlatma]([./Distributed System Start-start.png](https://github.com/ismailhakkituran/distributed-disk-register/blob/main/Distributed%20System%20Start-telnet.png)
 
 ###  Sonuç
 
