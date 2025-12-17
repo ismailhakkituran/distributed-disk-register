@@ -143,12 +143,15 @@ public class NodeMain {
                         int messageId = getCmd.getKey();
                         
                         // Diskten oku
-                        String value = readMessageFromDisk(messageId);
+                        
+                        // String value = readMessageFromDisk(messageId);
 
-                        if (value == null) {
-                            // Kendi diskinde yoksa, üyelerden almayı dene
-                            value = retrieveFromMembers(messageId);
-                        }
+                        // if (value == null) {
+                        // Kendi diskinde yoksa, üyelerden almayı dene
+                        //  value = retrieveFromMembers(messageId);
+                        // }
+                        
+                        String value = retrieveFromMembers(messageId);
                         
                         if (value == null) {
                             result = "NOT_FOUND";
