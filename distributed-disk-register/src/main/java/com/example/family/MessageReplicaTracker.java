@@ -1,8 +1,12 @@
 package com.example.family;
 
-import family.NodeInfo;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import family.NodeInfo;
 
 public class MessageReplicaTracker {
     private final Map<Integer, List<NodeInfo>> messageToMembers = new ConcurrentHashMap<>();
@@ -28,5 +32,9 @@ public class MessageReplicaTracker {
         messageToMembers.forEach((id, members) -> {
             System.out.printf("Message %d -> %d replicas%n", id, members.size());
         });
+    }
+    public Map<Integer, List<NodeInfo>> getSnapshot() {
+        // Orijinal map bozulmasın diye salt okunur veya kopya döndürüyoruz
+        return Collections.unmodifiableMap(messageToMembers);
     }
 }
