@@ -1,6 +1,10 @@
 package com.example.family;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -8,7 +12,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -16,28 +24,22 @@ import java.util.concurrent.TimeUnit;
 import com.example.family.SetGetCommand.Command;
 import com.example.family.SetGetCommand.CommandParser;
 import com.example.family.SetGetCommand.DataStore;
+import com.example.family.SetGetCommand.GetCommand;
+import com.example.family.SetGetCommand.SetCommand;
 
 import family.ChatMessage;
 import family.Empty;
 import family.FamilyServiceGrpc;
 import family.FamilyView;
+import family.MessageId;
 import family.NodeInfo;
 import family.StorageServiceGrpc;
-import family.StoredMessage;
-import family.MessageId;
 import family.StoreResult;
+import family.StoredMessage;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.FileReader;
-import java.io.BufferedWriter;
-
-import com.example.family.SetGetCommand.SetCommand;
-import com.example.family.SetGetCommand.GetCommand;
 
 public class NodeMain {
 
@@ -119,6 +121,17 @@ public class NodeMain {
 
                 // Kendi üstüne de yaz
                 System.out.println(" Received from TCP: " + text);
+
+                if (text.equalsIgnoreCase("STATS")) {
+                    String statsReport = calculateLoadStats(registry);
+                    
+                    // Sonucu client'a yaz
+                    PrintWriter writer = new PrintWriter(client.getOutputStream(), true);
+                    writer.println(statsReport);
+                    
+                    // Döngünün başına dön (Broadcast yapmaya gerek yok)
+                    continue; 
+                }
 
                 try {
                     // 1) Komutu parse et
@@ -377,53 +390,61 @@ public class NodeMain {
 
         if (eligibleMembers.isEmpty()) {
             System.out.println("No members available for replication, only leader exists");
-            return "OK";
+            return "OK (ONLY LEADER)";
         }
 
+        Collections.sort(eligibleMembers, Comparator.comparingInt(NodeInfo::getPort));
         int replicasNeeded = Math.min(tolerance, eligibleMembers.size());
-        List<NodeInfo> selectedMembers = eligibleMembers.subList(0, replicasNeeded);
+        int startIndex = messageId % eligibleMembers.size();
+        List<NodeInfo> selectedMembers = new ArrayList<>();
+    for (int i = 0; i < replicasNeeded; i++) {
+        // Döngüsel seçim (Wrap around): Listenin sonuna gelince başa dön
+        int currentIndex = (startIndex + i) % eligibleMembers.size();
+        selectedMembers.add(eligibleMembers.get(currentIndex));
+    }
 
-        int successCount = 0;
-        for (NodeInfo member : selectedMembers) {
-            ManagedChannel channel = null;
-            try {
-                channel = ManagedChannelBuilder
-                        .forAddress(member.getHost(), member.getPort())
-                        .usePlaintext()
-                        .build();
+    // 4. ADIM: Seçilen üyelere gönder
+    int successCount = 0;
+    for (NodeInfo member : selectedMembers) {
+        ManagedChannel channel = null;
+        try {
+            channel = ManagedChannelBuilder
+                    .forAddress(member.getHost(), member.getPort())
+                    .usePlaintext()
+                    .build();
 
-                StorageServiceGrpc.StorageServiceBlockingStub stub = 
-                        StorageServiceGrpc.newBlockingStub(channel);
+            StorageServiceGrpc.StorageServiceBlockingStub stub =
+                    StorageServiceGrpc.newBlockingStub(channel);
 
-                StoredMessage msg = StoredMessage.newBuilder()
-                        .setId(messageId)
-                        .setText(messageText)
-                        .build();
+            StoredMessage msg = StoredMessage.newBuilder()
+                    .setId(messageId)
+                    .setText(messageText)
+                    .build();
 
-                StoreResult result = stub.store(msg);
+            StoreResult result = stub.store(msg);
 
-                if (result.getSuccess()) {
-                    REPLICA_TRACKER.addReplica(messageId, member);
-                    successCount++;
-                    System.out.printf("Replicated message %d to %s:%d%n", 
-                            messageId, member.getHost(), member.getPort());
-                }
+            if (result.getSuccess()) {
+                REPLICA_TRACKER.addReplica(messageId, member);
+                successCount++;
+                System.out.printf("Replicated msg %d to %s:%d (LoadBalanced)%n",
+                        messageId, member.getHost(), member.getPort());
+            }
 
-            } catch (Exception e) {
-                System.err.printf("Failed to replicate to %s:%d - %s%n",
-                        member.getHost(), member.getPort(), e.getMessage());
-            } finally {
-                if (channel != null) {
-                    channel.shutdownNow();
-                }
+        } catch (Exception e) {
+            System.err.printf("Failed to replicate to %s:%d - %s%n",
+                    member.getHost(), member.getPort(), e.getMessage());
+        } finally {
+            if (channel != null) {
+                channel.shutdownNow();
             }
         }
+    }
 
-        if (successCount == replicasNeeded) {
-            return "OK";
-        } else {
-            return "ERROR: Failed to replicate to all required members (" + successCount + "/" + replicasNeeded + ")";
-        }
+    if (successCount >= 1) { // En az 1 yere bile gitse OK sayabiliriz (tasarım tercihi)
+        return "OK";
+    } else {
+        return "ERROR: Replication failed";
+    }
     }
 
     private static String retrieveFromMembers(int messageId) {
@@ -468,5 +489,36 @@ public class NodeMain {
         }
 
         return null;
+    }
+    private static String calculateLoadStats(NodeRegistry registry) {
+        Map<Integer, List<NodeInfo>> data = REPLICA_TRACKER.getSnapshot();
+        Map<String, Integer> nodeCounts = new HashMap<>();
+
+        // 1. Her mesajın hangi üyelerde olduğunu gez
+        for (List<NodeInfo> nodes : data.values()) {
+            for (NodeInfo node : nodes) {
+                // Key olarak "Host:Port" kullanıyoruz
+                String key = node.getHost() + ":" + node.getPort();
+                nodeCounts.put(key, nodeCounts.getOrDefault(key, 0) + 1);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n=== LOAD BALANCING STATS ===\n");
+        sb.append("Total Messages Stored: ").append(data.size()).append("\n");
+        
+        // Registry'deki (bildiğimiz) tüm üyeleri listele
+        List<NodeInfo> allMembers = new ArrayList<>(registry.snapshot());
+        // Port numarasına göre sırala ki çıktı okunaklı olsun
+        allMembers.sort(Comparator.comparingInt(NodeInfo::getPort));
+
+        for (NodeInfo member : allMembers) {
+            String key = member.getHost() + ":" + member.getPort();
+            int count = nodeCounts.getOrDefault(key, 0);
+            sb.append(String.format("Node %s -> %d messages\n", key, count));
+        }
+        sb.append("============================\n");
+        
+        return sb.toString();
     }
 }
