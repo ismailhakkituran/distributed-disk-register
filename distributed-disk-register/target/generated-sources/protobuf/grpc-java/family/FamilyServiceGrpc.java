@@ -2,8 +2,7 @@ package family;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
-/**
- */
+
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.67.1)",
     comments = "Source: family.proto")
@@ -14,7 +13,7 @@ public final class FamilyServiceGrpc {
 
   public static final java.lang.String SERVICE_NAME = "family.FamilyService";
 
-  // Static method descriptors that strictly reflect the proto.
+  
   private static volatile io.grpc.MethodDescriptor<family.NodeInfo,
       family.FamilyView> getJoinMethod;
 
@@ -108,9 +107,7 @@ public final class FamilyServiceGrpc {
     return getReceiveChatMethod;
   }
 
-  /**
-   * Creates a new async stub that supports all call types for the service
-   */
+  
   public static FamilyServiceStub newStub(io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<FamilyServiceStub> factory =
       new io.grpc.stub.AbstractStub.StubFactory<FamilyServiceStub>() {
@@ -122,9 +119,7 @@ public final class FamilyServiceGrpc {
     return FamilyServiceStub.newStub(factory, channel);
   }
 
-  /**
-   * Creates a new blocking-style stub that supports unary and streaming output calls on the service
-   */
+  
   public static FamilyServiceBlockingStub newBlockingStub(
       io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<FamilyServiceBlockingStub> factory =
@@ -137,9 +132,7 @@ public final class FamilyServiceGrpc {
     return FamilyServiceBlockingStub.newStub(factory, channel);
   }
 
-  /**
-   * Creates a new ListenableFuture-style stub that supports unary calls on the service
-   */
+  
   public static FamilyServiceFutureStub newFutureStub(
       io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<FamilyServiceFutureStub> factory =
@@ -152,35 +145,29 @@ public final class FamilyServiceGrpc {
     return FamilyServiceFutureStub.newStub(factory, channel);
   }
 
-  /**
-   */
+  
   public interface AsyncService {
 
-    /**
-     */
+    
     default void join(family.NodeInfo request,
         io.grpc.stub.StreamObserver<family.FamilyView> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getJoinMethod(), responseObserver);
     }
 
-    /**
-     */
+    
     default void getFamily(family.Empty request,
         io.grpc.stub.StreamObserver<family.FamilyView> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetFamilyMethod(), responseObserver);
     }
 
-    /**
-     */
+    
     default void receiveChat(family.ChatMessage request,
         io.grpc.stub.StreamObserver<family.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReceiveChatMethod(), responseObserver);
     }
   }
 
-  /**
-   * Base class for the server implementation of the service FamilyService.
-   */
+  
   public static abstract class FamilyServiceImplBase
       implements io.grpc.BindableService, AsyncService {
 
@@ -189,9 +176,7 @@ public final class FamilyServiceGrpc {
     }
   }
 
-  /**
-   * A stub to allow clients to do asynchronous rpc calls to service FamilyService.
-   */
+  
   public static final class FamilyServiceStub
       extends io.grpc.stub.AbstractAsyncStub<FamilyServiceStub> {
     private FamilyServiceStub(
@@ -205,24 +190,21 @@ public final class FamilyServiceGrpc {
       return new FamilyServiceStub(channel, callOptions);
     }
 
-    /**
-     */
+    
     public void join(family.NodeInfo request,
         io.grpc.stub.StreamObserver<family.FamilyView> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getJoinMethod(), getCallOptions()), request, responseObserver);
     }
 
-    /**
-     */
+    
     public void getFamily(family.Empty request,
         io.grpc.stub.StreamObserver<family.FamilyView> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetFamilyMethod(), getCallOptions()), request, responseObserver);
     }
 
-    /**
-     */
+    
     public void receiveChat(family.ChatMessage request,
         io.grpc.stub.StreamObserver<family.Empty> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -230,9 +212,7 @@ public final class FamilyServiceGrpc {
     }
   }
 
-  /**
-   * A stub to allow clients to do synchronous rpc calls to service FamilyService.
-   */
+  
   public static final class FamilyServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<FamilyServiceBlockingStub> {
     private FamilyServiceBlockingStub(
@@ -246,31 +226,26 @@ public final class FamilyServiceGrpc {
       return new FamilyServiceBlockingStub(channel, callOptions);
     }
 
-    /**
-     */
+    
     public family.FamilyView join(family.NodeInfo request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getJoinMethod(), getCallOptions(), request);
     }
 
-    /**
-     */
+    
     public family.FamilyView getFamily(family.Empty request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetFamilyMethod(), getCallOptions(), request);
     }
 
-    /**
-     */
+    
     public family.Empty receiveChat(family.ChatMessage request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getReceiveChatMethod(), getCallOptions(), request);
     }
   }
 
-  /**
-   * A stub to allow clients to do ListenableFuture-style rpc calls to service FamilyService.
-   */
+  
   public static final class FamilyServiceFutureStub
       extends io.grpc.stub.AbstractFutureStub<FamilyServiceFutureStub> {
     private FamilyServiceFutureStub(
@@ -284,24 +259,21 @@ public final class FamilyServiceGrpc {
       return new FamilyServiceFutureStub(channel, callOptions);
     }
 
-    /**
-     */
+    
     public com.google.common.util.concurrent.ListenableFuture<family.FamilyView> join(
         family.NodeInfo request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getJoinMethod(), getCallOptions()), request);
     }
 
-    /**
-     */
+    
     public com.google.common.util.concurrent.ListenableFuture<family.FamilyView> getFamily(
         family.Empty request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetFamilyMethod(), getCallOptions()), request);
     }
 
-    /**
-     */
+    
     public com.google.common.util.concurrent.ListenableFuture<family.Empty> receiveChat(
         family.ChatMessage request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
