@@ -12,6 +12,8 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.IOException;
 import java.net.Socket;
 
 
@@ -22,7 +24,7 @@ import java.util.List;
 import java.util.concurrent.*;
 
 public class NodeMain {
-
+    private static final java.util.Map<Integer, String> messageMap = new java.util.concurrent.ConcurrentHashMap<>();
     private static final int START_PORT = 5555;
     private static final int PRINT_INTERVAL_SECONDS = 10;
 
@@ -80,40 +82,48 @@ public class NodeMain {
     }, "LeaderTextListener").start();
 }
 
-private static void handleClientTextConnection(Socket client,
-                                               NodeRegistry registry,
-                                               NodeInfo self) {
-    System.out.println("New TCP client connected: " + client.getRemoteSocketAddress());
-    try (BufferedReader reader = new BufferedReader(
-            new InputStreamReader(client.getInputStream()))) {
+    private static void handleClientTextConnection(Socket client, NodeRegistry registry, NodeInfo self) {
+        System.out.println("Yeni TCP istemcisi bağlandı: " + client.getRemoteSocketAddress());
+        // reader okumak için, writer ise istemciye (terminale) cevap yazmak için
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+             PrintWriter writer = new PrintWriter(client.getOutputStream(), true)) {
 
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String text = line.trim();
-            if (text.isEmpty()) continue;
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String text = line.trim();
+                if (text.isEmpty()) continue;
 
-            long ts = System.currentTimeMillis();
+                System.out.println("📝 Gelen Komut: " + text);
 
-            // Kendi üstüne de yaz
-            System.out.println("📝 Received from TCP: " + text);
+                // 1. Komutu ayrıştır (Parser'ı kullanıyoruz)
+                Command cmd = CommandParser.parse(text);
 
-            ChatMessage msg = ChatMessage.newBuilder()
-                    .setText(text)
-                    .setFromHost(self.getHost())
-                    .setFromPort(self.getPort())
-                    .setTimestamp(ts)
-                    .build();
+                if (cmd instanceof SetCommand sc) {
+                    // SET ise belleğe (map) yaz ve OK döndür
+                    messageMap.put(sc.id(), sc.message());
+                    writer.println("OK");
+                    System.out.println("Sistem: ID=" + sc.id() + " kaydedildi.");
+                }
+                else if (cmd instanceof GetCommand gc) {
+                    // GET ise map'ten bul, varsa yaz yoksa NOT_FOUND döndür
+                    String result = messageMap.get(gc.id());
+                    if (result != null) {
+                        writer.println(result);
+                    } else {
+                        writer.println("NOT_FOUND");
+                    }
+                }
+                else {
+                    writer.println("ERROR: Geçersiz Format (SET <id> <msg> veya GET <id> kullanın)");
+                }
+            }
 
-            // Tüm family üyelerine broadcast et
-            broadcastToFamily(registry, self, msg);
+        } catch (IOException e) {
+            System.err.println("TCP istemci hatası: " + e.getMessage());
+        } finally {
+            try { client.close(); } catch (IOException ignored) {}
         }
-
-    } catch (IOException e) {
-        System.err.println("TCP client handler error: " + e.getMessage());
-    } finally {
-        try { client.close(); } catch (IOException ignored) {}
     }
-}
 
 private static void broadcastToFamily(NodeRegistry registry,
                                       NodeInfo self,
