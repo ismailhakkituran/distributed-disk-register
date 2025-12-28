@@ -23,6 +23,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.*;
 
+import com.example.family.Command;
+import com.example.family.GetCommand;
+import com.example.family.SetCommand;
+import com.example.family.CommandParser;
+
 public class NodeMain {
     private static final java.util.Map<Integer, String> messageMap = new java.util.concurrent.ConcurrentHashMap<>();
     private static final int START_PORT = 5555;
@@ -120,9 +125,8 @@ public class NodeMain {
 
         } catch (IOException e) {
             System.err.println("TCP istemci hatası: " + e.getMessage());
-        } finally {
-            try { client.close(); } catch (IOException ignored) {}
         }
+            try { client.close(); } catch (IOException ignored) {}
     }
 
 private static void broadcastToFamily(NodeRegistry registry,
