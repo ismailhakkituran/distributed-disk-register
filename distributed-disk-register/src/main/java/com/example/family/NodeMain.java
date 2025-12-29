@@ -27,9 +27,12 @@ import com.example.family.Command;
 import com.example.family.GetCommand;
 import com.example.family.SetCommand;
 import com.example.family.CommandParser;
+import com.example.family.DiskManager;
+
 
 public class NodeMain {
     private static final java.util.Map<Integer, String> messageMap = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final DiskManager diskManager = new DiskManager();
     private static final int START_PORT = 5555;
     private static final int PRINT_INTERVAL_SECONDS = 10;
 
@@ -104,14 +107,18 @@ public class NodeMain {
                 Command cmd = CommandParser.parse(text);
 
                 if (cmd instanceof SetCommand sc) {
-                    // SET ise belleğe (map) yaz ve OK döndür
-                    messageMap.put(sc.id(), sc.message());
-                    writer.println("OK");
-                    System.out.println("Sistem: ID=" + sc.id() + " kaydedildi.");
+                    boolean success = diskManager.saveMessage(sc.id(), sc.message());
+
+                    if (success) {
+                        writer.println("OK");
+                        System.out.println("Sistem: ID=" + sc.id() + " diske kaydedildi.");
+                    } else {
+                        writer.println("ERROR: Disk Yazma Hatası");
+                    }
                 }
                 else if (cmd instanceof GetCommand gc) {
-                    // GET ise map'ten bul, varsa yaz yoksa NOT_FOUND döndür
-                    String result = messageMap.get(gc.id());
+                    String result = diskManager.loadMessage(gc.id());
+
                     if (result != null) {
                         writer.println(result);
                     } else {
@@ -119,7 +126,7 @@ public class NodeMain {
                     }
                 }
                 else {
-                    writer.println("ERROR: Geçersiz Format (SET <id> <msg> veya GET <id> kullanın)");
+                    writer.println("ERROR: Geçersiz Format");
                 }
             }
 

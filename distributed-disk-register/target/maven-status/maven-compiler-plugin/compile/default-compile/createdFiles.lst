@@ -2,12 +2,13 @@ family/Empty.class
 com/example/family/Command.class
 family/FamilyProto.class
 family/NodeInfo$1.class
-family/Empty$Builder.class
+com/example/family/DiskManager.class
 com/example/family/NodeRegistry.class
+family/Empty$Builder.class
 family/FamilyViewOrBuilder.class
+com/example/family/NodeMain.class
 family/ChatMessage.class
 family/ChatMessageOrBuilder.class
-com/example/family/NodeMain.class
 family/FamilyServiceGrpc$FamilyServiceFileDescriptorSupplier.class
 family/FamilyServiceGrpc$FamilyServiceMethodDescriptorSupplier.class
 family/FamilyServiceGrpc$FamilyServiceFutureStub.class
@@ -17,8 +18,8 @@ family/NodeInfo.class
 family/Empty$1.class
 family/FamilyServiceGrpc$3.class
 family/FamilyServiceGrpc$AsyncService.class
-family/FamilyServiceGrpc.class
 com/example/family/GetCommand.class
+family/FamilyServiceGrpc.class
 family/FamilyServiceGrpc$FamilyServiceBlockingStub.class
 family/FamilyServiceGrpc$MethodHandlers.class
 family/FamilyServiceGrpc$FamilyServiceBaseDescriptorSupplier.class
