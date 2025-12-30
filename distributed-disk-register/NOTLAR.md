@@ -1,1 +1,2 @@
 # Dağıtık Mesaj Kayıt Servisi Projesi Notları
+Bu proje, verilerin hem güvenli bir şekilde saklandığı hem de farklı sunucular arasında paylaşıldığı dağıtık bir kayıt sistemidir. Bir sunucu kapansa ya da bozulsa bile verilerin kaybolmamasını sağlar. Dışarıdan bir kullanıcı sisteme bağlanıp düz metin(TCP) şeklinde bir mesaj gönderdiğinde, bu isteği grubun 'Lider' sunucusu karşılar.Lider sunucu bir veri aldığında, bunu gruptaki diğer sunuculara (düğümlere) iletmek için gRPC ve Protobuf teknolojisini kullanır.
