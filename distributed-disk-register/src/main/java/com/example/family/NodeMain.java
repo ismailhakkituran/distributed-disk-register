@@ -23,12 +23,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.*;
 
-import com.example.family.Command;
-import com.example.family.GetCommand;
-import com.example.family.SetCommand;
-import com.example.family.CommandParser;
-import com.example.family.DiskManager;
-
 
 public class NodeMain {
     private static final java.util.Map<Integer, String> messageMap = new java.util.concurrent.ConcurrentHashMap<>();
@@ -51,6 +45,7 @@ public class NodeMain {
         Server server = ServerBuilder
                 .forPort(port)
                 .addService(service)
+                .addService(new StorageServiceImpl(diskManager))
                 .build()
                 .start();
 
