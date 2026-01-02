@@ -12,3 +12,8 @@ Bu aşamada, sistemdeki verilerin geçici bellek (RAM) yerine kalıcı bir depol
 3.Aşama- gRPC Mesaj Modeli
 
 Bu aşamada , iki bilgisayarın birbiriyle anlaşabilmesi için ortak dil belirledik. (family.proto) Sunucuların birbirine ne göndereceğini sisteme tanıttık ayrıca sunucunun dışarıya hangi fonksiyonları açacağını belirledik. (StorageServiceImpl.java) gRPC üzerinden bir kaydet isteği geldiğinde onu yakalayıp 2. aşamada olan  DiskManager'a teslim eden  yani ağdan gelen veriyi diske yazdıran köprüyü kurmuş olduk.Bu aşamada son olarak da sunucu ayağa kalkarken depolama servisinide çalıştır kodunu ekledik.
+
+4. Aşama - Dağıtık Lider Mantığı
+
+Bu aşamada , önce sisteme esneklik kazandırmak için kaç kişiye göndereceğimizi  kodun içine yazmak yerine tolerance.conf diye bir ayar dosyası oluşturduk . Sunucu başlarken bu dosyayı okuyor ve lider , tolerance değerine göre yedekleme yapıyor. NodeMain sınıfına distributionMap adında bir harita (Map) ekledik. Bu sayede lider veriyi diğer node'lara  başarıyla gönderdiyse bu haritaya not düşüyor . Ayrıca liderin diğer üyelere paket taşımasını sağlayan fonksiyonu da yazdık bu fonksiyon önce tüm üyelerin listesini alıyor ama kendini çıkartıyor , kalan üyeler arasından tolerance sayısı kadar yedek sunucu seçiyor . Sonra seçilen bu sunuculara  Store servsi üzerinden bağlanıp veriyi gönderiyor. Seçilen sunucular okeylerse lider bunu not kaydediyor.
+
