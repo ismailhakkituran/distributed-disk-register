@@ -103,20 +103,19 @@ public class NodeMain {
                 Command cmd = CommandParser.parse(text);
 
                 if (cmd instanceof SetCommand sc) {
-                    // 1. Lider önce kendi diskine yazar
+
                     boolean localSuccess = diskManager.saveMessage(sc.id(), sc.message());
 
                     if (localSuccess) {
                         java.util.List<family.NodeInfo> savedNodes = new java.util.ArrayList<>();
-                        savedNodes.add(self); // Lider kendini listeye ekler
+                        savedNodes.add(self);
 
-                        // 2. Diğer üyeleri al ve içlerinden TOLERANCE kadarını seç
                         java.util.List<family.NodeInfo> members = registry.snapshot();
                         java.util.List<family.NodeInfo> others = members.stream()
                                 .filter(n -> !(n.getHost().equals(self.getHost()) && n.getPort() == self.getPort()))
                                 .collect(java.util.stream.Collectors.toList());
 
-                        // Listeyi karıştır (rastgele seçim için)
+
                         java.util.Collections.shuffle(others);
 
                         int distributedCount = 0;
@@ -128,7 +127,7 @@ public class NodeMain {
                             }
                         }
 
-                        // 3. Mesajın hangi node'larda olduğunu haritaya kaydet
+
                         messageLocationMap.put(sc.id(), savedNodes);
 
                         if (distributedCount >= TOLERANCE || (others.size() < TOLERANCE && distributedCount == others.size())) {
@@ -142,16 +141,31 @@ public class NodeMain {
                     }
                 }
                 else if (cmd instanceof GetCommand gc) {
-                    String result = diskManager.loadMessage(gc.id());
+                    // 1. Önce kendi diskine bak
+                    String content = diskManager.loadMessage(gc.id());
 
-                    if (result != null) {
-                        writer.println(result);
+                    if (content != null) {
+                        writer.println(content);
                     } else {
-                        writer.println("NOT_FOUND");
+                        // 2. Kendi diskinde yoksa, haritadan kimde olduğuna bak
+                        java.util.List<family.NodeInfo> owners = messageLocationMap.getOrDefault(gc.id(), java.util.Collections.emptyList());
+
+                        String foundContent = null;
+                        for (family.NodeInfo owner : owners) {
+                            // Kendine tekrar sorma
+                            if (owner.getPort() == self.getPort()) continue;
+
+                            // Üyeden mesajı gRPC ile iste (Aşama 4'ün retrieve RPC'si)
+                            foundContent = fetchFromMember(owner, gc.id());
+                            if (foundContent != null && !foundContent.equals("NOT_FOUND")) break;
+                        }
+
+                        if (foundContent != null) {
+                            writer.println(foundContent);
+                        } else {
+                            writer.println("NOT_FOUND");
+                        }
                     }
-                }
-                else {
-                    writer.println("ERROR: Geçersiz Format");
                 }
             }
 
@@ -338,5 +352,15 @@ public class NodeMain {
                 if (channel != null) channel.shutdownNow();
             }
         }
+    private static String fetchFromMember(family.NodeInfo target, int id) {
+        io.grpc.ManagedChannel channel = io.grpc.ManagedChannelBuilder.forAddress(target.getHost(), target.getPort()).usePlaintext().build();
+        try {
+            family.StorageServiceGrpc.StorageServiceBlockingStub stub = family.StorageServiceGrpc.newBlockingStub(channel);
+            family.MessageId request = family.MessageId.newBuilder().setId(id).build();
+            family.StoredMessage response = stub.retrieve(request);
+            return response.getText();
+        } catch (Exception e) { return null; }
+        finally { channel.shutdownNow(); }
+    }
 
 }
