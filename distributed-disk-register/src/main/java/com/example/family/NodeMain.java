@@ -24,12 +24,14 @@ import java.util.concurrent.*;
 
 
 public class NodeMain {
-    private static final java.util.Map<Integer, String> messageMap = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final java.util.Map<Integer, java.util.List<family.NodeInfo>> messageLocationMap = new java.util.concurrent.ConcurrentHashMap<>();
     private static final DiskManager diskManager = new DiskManager();
     private static final int START_PORT = 5555;
     private static final int PRINT_INTERVAL_SECONDS = 10;
+    private static int TOLERANCE = 1;
 
     public static void main(String[] args) throws Exception {
+        loadToleranceConfig();
         String host = "127.0.0.1";
         int port = findFreePort(START_PORT);
 
@@ -101,13 +103,42 @@ public class NodeMain {
                 Command cmd = CommandParser.parse(text);
 
                 if (cmd instanceof SetCommand sc) {
-                    boolean success = diskManager.saveMessage(sc.id(), sc.message());
+                    // 1. Lider önce kendi diskine yazar
+                    boolean localSuccess = diskManager.saveMessage(sc.id(), sc.message());
 
-                    if (success) {
-                        writer.println("OK");
-                        System.out.println("Sistem: ID=" + sc.id() + " diske kaydedildi.");
+                    if (localSuccess) {
+                        java.util.List<family.NodeInfo> savedNodes = new java.util.ArrayList<>();
+                        savedNodes.add(self); // Lider kendini listeye ekler
+
+                        // 2. Diğer üyeleri al ve içlerinden TOLERANCE kadarını seç
+                        java.util.List<family.NodeInfo> members = registry.snapshot();
+                        java.util.List<family.NodeInfo> others = members.stream()
+                                .filter(n -> !(n.getHost().equals(self.getHost()) && n.getPort() == self.getPort()))
+                                .collect(java.util.stream.Collectors.toList());
+
+                        // Listeyi karıştır (rastgele seçim için)
+                        java.util.Collections.shuffle(others);
+
+                        int distributedCount = 0;
+                        for (int i = 0; i < TOLERANCE && i < others.size(); i++) {
+                            family.NodeInfo target = others.get(i);
+                            if (sendStoreRequest(target, sc)) {
+                                savedNodes.add(target);
+                                distributedCount++;
+                            }
+                        }
+
+                        // 3. Mesajın hangi node'larda olduğunu haritaya kaydet
+                        messageLocationMap.put(sc.id(), savedNodes);
+
+                        if (distributedCount >= TOLERANCE || (others.size() < TOLERANCE && distributedCount == others.size())) {
+                            writer.println("OK");
+                            System.out.println("✅ ID=" + sc.id() + " başarıyla " + savedNodes.size() + " node'a dağıtıldı.");
+                        } else {
+                            writer.println("ERROR: Yeterli kopyalama yapılamadı.");
+                        }
                     } else {
-                        writer.println("ERROR: Disk Yazma Hatası");
+                        writer.println("ERROR: Lider diske yazamadı.");
                     }
                 }
                 else if (cmd instanceof GetCommand gc) {
@@ -130,7 +161,7 @@ public class NodeMain {
             try { client.close(); } catch (IOException ignored) {}
     }
 
-private static void broadcastToFamily(NodeRegistry registry,
+    private static void broadcastToFamily(NodeRegistry registry,
                                       NodeInfo self,
                                       ChatMessage msg) {
 
@@ -228,44 +259,84 @@ private static void broadcastToFamily(NodeRegistry registry,
     }
 
     private static void startHealthChecker(NodeRegistry registry, NodeInfo self) {
-    ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    scheduler.scheduleAtFixedRate(() -> {
-        List<NodeInfo> members = registry.snapshot();
+        scheduler.scheduleAtFixedRate(() -> {
+            List<NodeInfo> members = registry.snapshot();
 
-        for (NodeInfo n : members) {
-            // Kendimizi kontrol etmeyelim
-            if (n.getHost().equals(self.getHost()) && n.getPort() == self.getPort()) {
-                continue;
+            for (NodeInfo n : members) {
+                // Kendimizi kontrol etmeyelim
+                if (n.getHost().equals(self.getHost()) && n.getPort() == self.getPort()) {
+                    continue;
+                }
+
+                ManagedChannel channel = null;
+                try {
+                    channel = ManagedChannelBuilder
+                            .forAddress(n.getHost(), n.getPort())
+                            .usePlaintext()
+                            .build();
+
+                    FamilyServiceGrpc.FamilyServiceBlockingStub stub =
+                            FamilyServiceGrpc.newBlockingStub(channel);
+
+                    // Ping gibi kullanıyoruz: cevap bizi ilgilendirmiyor,
+                    // sadece RPC'nin hata fırlatmaması önemli.
+                    stub.getFamily(Empty.newBuilder().build());
+
+                } catch (Exception e) {
+                    // Bağlantı yok / node ölmüş → listeden çıkar
+                    System.out.printf("Node %s:%d unreachable, removing from family%n",
+                            n.getHost(), n.getPort());
+                    registry.remove(n);
+                } finally {
+                    if (channel != null) {
+                        channel.shutdownNow();
+                    }
+                }
             }
 
-            ManagedChannel channel = null;
+        }, 5, 10, TimeUnit.SECONDS); // 5 sn sonra başla, 10 sn'de bir kontrol et
+    }
+        private static void loadToleranceConfig() {
+            java.io.File file = new java.io.File("tolerance.conf");
+            if (!file.exists()) {
+                System.out.println("⚠️ tolerance.conf bulunamadı, varsayılan TOLERANCE=1 kullanılıyor.");
+                return;
+            }
+            try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file))) {
+                String line = br.readLine();
+                if (line != null && line.startsWith("TOLERANCE=")) {
+                    TOLERANCE = Integer.parseInt(line.split("=")[1].trim());
+                }
+            } catch (Exception e) {
+                System.err.println("Konfig okuma hatası: " + e.getMessage());
+            }
+        }
+        private static boolean sendStoreRequest(family.NodeInfo target, SetCommand cmd) {
+            io.grpc.ManagedChannel channel = null;
             try {
-                channel = ManagedChannelBuilder
-                        .forAddress(n.getHost(), n.getPort())
+                channel = io.grpc.ManagedChannelBuilder
+                        .forAddress(target.getHost(), target.getPort())
                         .usePlaintext()
                         .build();
 
-                FamilyServiceGrpc.FamilyServiceBlockingStub stub =
-                        FamilyServiceGrpc.newBlockingStub(channel);
+                family.StorageServiceGrpc.StorageServiceBlockingStub stub =
+                        family.StorageServiceGrpc.newBlockingStub(channel);
 
-                // Ping gibi kullanıyoruz: cevap bizi ilgilendirmiyor,
-                // sadece RPC'nin hata fırlatmaması önemli.
-                stub.getFamily(Empty.newBuilder().build());
+                family.StoredMessage msg = family.StoredMessage.newBuilder()
+                        .setId(cmd.id())
+                        .setText(cmd.message())
+                        .build();
 
+                family.StoreResult result = stub.store(msg);
+                return result.getSuccess();
             } catch (Exception e) {
-                // Bağlantı yok / node ölmüş → listeden çıkar
-                System.out.printf("Node %s:%d unreachable, removing from family%n",
-                        n.getHost(), n.getPort());
-                registry.remove(n);
+                System.err.printf("-> Kopya hatası %s:%d : %s%n", target.getHost(), target.getPort(), e.getMessage());
+                return false;
             } finally {
-                if (channel != null) {
-                    channel.shutdownNow();
-                }
+                if (channel != null) channel.shutdownNow();
             }
         }
-
-    }, 5, 10, TimeUnit.SECONDS); // 5 sn sonra başla, 10 sn'de bir kontrol et
-}
 
 }
