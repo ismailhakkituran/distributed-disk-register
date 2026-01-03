@@ -29,6 +29,8 @@ public class NodeMain {
     private static final int START_PORT = 5555;
     private static final int PRINT_INTERVAL_SECONDS = 10;
     private static int TOLERANCE = 1;
+    private static boolean isLeader = false;
+    private static ServerSocket leaderSocket = null;
 
     public static void main(String[] args) throws Exception {
         loadToleranceConfig();
@@ -51,13 +53,8 @@ public class NodeMain {
                 .start();
 
                 System.out.printf("Node started on %s:%d%n", host, port);
-
-                // Eğer bu ilk node ise (port 5555), TCP 6666'da text dinlesin
-                if (port == START_PORT) {
-                    startLeaderTextListener(registry, self);
-                }
-
                 discoverExistingNodes(host, port, registry, self);
+                checkLeadership(registry, self);
                 startFamilyPrinter(registry, self);
                 startHealthChecker(registry, self);
 
@@ -67,24 +64,36 @@ public class NodeMain {
 
 
     }
-
     private static void startLeaderTextListener(NodeRegistry registry, NodeInfo self) {
-    // Sadece lider (5555 portlu node) bu methodu çağırmalı
-    new Thread(() -> {
-        try (ServerSocket serverSocket = new ServerSocket(6666)) {
-            System.out.printf("Leader listening for text on TCP %s:%d%n",
-                    self.getHost(), 6666);
+        new Thread(() -> {
+            try {
+                // Eğer önceki bir soket açıksa kapatmaya çalış (Temizlik)
+                if (leaderSocket != null && !leaderSocket.isClosed()) {
+                    leaderSocket.close();
+                }
 
-            while (true) {
-                Socket client = serverSocket.accept();
-                new Thread(() -> handleClientTextConnection(client, registry, self)).start();
+                leaderSocket = new ServerSocket();
+                leaderSocket.setReuseAddress(true); // Portu hemen serbest bırakır
+                leaderSocket.bind(new java.net.InetSocketAddress(6666));
+                System.out.printf("📢 Lider Modu Aktif: TCP %s:%d üzerinde dinleniyor...%n", self.getHost(), 6666);
+
+                while (isLeader && !leaderSocket.isClosed()) {
+                    try {
+                        Socket client = leaderSocket.accept();
+                        new Thread(() -> handleClientTextConnection(client, registry, self)).start();
+                    } catch (IOException e) {
+                        // Liderlik düştüyse veya soket kapandıysa döngüden çık
+                        if (isLeader) System.err.println("Lider dinleme hatası: " + e.getMessage());
+                    }
+                }
+
+            } catch (IOException e) {
+                System.err.println("⚠️ Lider portu (6666) açılamadı! Belki başka bir lider var? Hata: " + e.getMessage());
+                // Port hatası aldıysak muhtemelen lider değilizdir veya port doludur.
+                // isLeader = false; // Opsiyonel: Duruma göre liderliği bırakabilir.
             }
-
-        } catch (IOException e) {
-            System.err.println("Error in leader text listener: " + e.getMessage());
-        }
-    }, "LeaderTextListener").start();
-}
+        }, "LeaderTextListener").start();
+    }
 
     private static void handleClientTextConnection(Socket client, NodeRegistry registry, NodeInfo self) {
         System.out.println("Yeni TCP istemcisi bağlandı: " + client.getRemoteSocketAddress());
@@ -244,7 +253,8 @@ public class NodeMain {
                 System.out.printf("Joined through %s:%d, family size now: %d%n",
                         host, port, registry.snapshot().size());
 
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                System.out.printf("⚠️ UYARI: %d portuna bağlanılamadı. Sebep: %s%n", port, e.getMessage());
             } finally {
                 if (channel != null) channel.shutdownNow();
             }
@@ -303,6 +313,7 @@ public class NodeMain {
                     System.out.printf("Node %s:%d unreachable, removing from family%n",
                             n.getHost(), n.getPort());
                     registry.remove(n);
+                    checkLeadership(registry, self);
                 } finally {
                     if (channel != null) {
                         channel.shutdownNow();
@@ -361,6 +372,40 @@ public class NodeMain {
             return response.getText();
         } catch (Exception e) { return null; }
         finally { channel.shutdownNow(); }
+    }
+    private static synchronized void checkLeadership(NodeRegistry registry, NodeInfo self) {
+        List<NodeInfo> members = registry.snapshot();
+
+        if (members.isEmpty()) {
+            if (!isLeader) {
+                promoteToLeader(registry, self);
+            }
+            return;
+        }
+
+        int minPort = Integer.MAX_VALUE;
+        for (NodeInfo n : members) {
+            if (n.getPort() < minPort) {
+                minPort = n.getPort();
+            }
+        }
+        if (self.getPort() < minPort) {
+            minPort = self.getPort();
+        }
+
+        if (self.getPort() == minPort) {
+            if (!isLeader) {
+                System.out.println("👑 TEBRİKLER! Bu node artık YENİ LİDER ilan edildi.");
+                promoteToLeader(registry, self);
+            }
+        }else {
+            System.out.println("🛡️ Lider değilim, yedek olarak bekliyorum.");
+        }
+    }
+
+    private static void promoteToLeader(NodeRegistry registry, NodeInfo self) {
+        isLeader = true;
+        startLeaderTextListener(registry, self);
     }
 
 }
