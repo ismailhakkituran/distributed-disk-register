@@ -5,8 +5,93 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66b4d497-0dc6-45c3-a1fd-cd27eef17eba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Image 2026-01-02 at 09.55.19..jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Image 2026-01-02 at 09.55.19.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Image 2026-01-02 at 09.55.19asd.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Image.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tolerance.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/family/NodeMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/family/NodeMain.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/annotations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/annotations.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/auth.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/auth.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/backend.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/backend.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/billing.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/billing.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/client.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/client.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/config_change.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/config_change.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/consumer.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/consumer.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/context.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/context.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/control.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/control.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/distribution.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/distribution.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/documentation.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/documentation.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/endpoint.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/endpoint.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/error_reason.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/error_reason.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/field_behavior.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/field_behavior.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/field_info.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/field_info.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/http.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/http.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/httpbody.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/httpbody.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/label.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/label.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/launch_stage.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/launch_stage.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/log.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/log.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/logging.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/logging.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/metric.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/metric.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/monitored_resource.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/monitored_resource.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/monitoring.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/monitoring.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/policy.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/policy.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/quota.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/quota.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/resource.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/resource.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/routing.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/routing.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/service.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/service.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/source_info.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/source_info.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/system_parameter.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/system_parameter.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/usage.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/usage.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/api/visibility.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/api/visibility.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/apps/card/v1/card.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/apps/card/v1/card.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/cloud/audit/audit_log.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/cloud/audit/audit_log.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/cloud/extended_operations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/cloud/extended_operations.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/cloud/location/locations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/cloud/location/locations.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/geo/type/viewport.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/geo/type/viewport.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/logging/type/http_request.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/logging/type/http_request.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/logging/type/log_severity.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/logging/type/log_severity.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/longrunning/operations.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/longrunning/operations.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/rpc/code.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/rpc/code.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/rpc/context/attribute_context.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/rpc/context/attribute_context.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/rpc/context/audit_context.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/rpc/context/audit_context.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/rpc/error_details.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/rpc/error_details.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/rpc/status.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/rpc/status.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/shopping/type/types.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/shopping/type/types.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/calendar_period.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/calendar_period.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/color.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/color.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/date.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/date.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/datetime.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/datetime.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/dayofweek.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/dayofweek.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/decimal.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/decimal.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/expr.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/expr.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/fraction.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/fraction.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/interval.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/interval.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/latlng.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/latlng.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/localized_text.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/localized_text.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/money.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/money.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/month.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/month.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/phone_number.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/phone_number.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/postal_address.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/postal_address.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/quaternion.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/quaternion.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/263ded114558ddf8c7441011dcdf9079/google/type/timeofday.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/9dbc63b48d5eff4a7b4dcad86a0aeb86/google/type/timeofday.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/any.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/any.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/api.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/api.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/descriptor.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/descriptor.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/duration.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/duration.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/empty.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/empty.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/field_mask.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/field_mask.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/source_context.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/source_context.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/struct.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/struct.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/timestamp.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/timestamp.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/type.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/type.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/protoc-dependencies/3d677d5748ab5950fe82d504270fa515/google/protobuf/wrappers.proto" beforeDir="false" afterPath="$PROJECT_DIR$/target/protoc-dependencies/052c02393e820fa2524be174d05f0470/google/protobuf/wrappers.proto" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,26 +109,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Projects/distributed-disk-register/distributed-disk-register/pom.xml&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "Merging main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/user/Projects/distributed-disk-register/distributed-disk-register/pom.xml",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -63,7 +148,7 @@
       <workItem from="1767161846012" duration="3855000" />
       <workItem from="1767168882545" duration="1005000" />
       <workItem from="1767334431909" duration="6374000" />
-      <workItem from="1767435550252" duration="1137000" />
+      <workItem from="1767435550252" duration="1886000" />
     </task>
     <servers />
   </component>
