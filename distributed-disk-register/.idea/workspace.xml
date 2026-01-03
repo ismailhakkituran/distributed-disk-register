@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="66b4d497-0dc6-45c3-a1fd-cd27eef17eba" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NOTLAR.md" beforeDir="false" afterPath="$PROJECT_DIR$/NOTLAR.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +62,8 @@
       <workItem from="1767013817929" duration="6721000" />
       <workItem from="1767161846012" duration="3855000" />
       <workItem from="1767168882545" duration="1005000" />
-      <workItem from="1767334431909" duration="2211000" />
+      <workItem from="1767334431909" duration="6374000" />
+      <workItem from="1767435550252" duration="1137000" />
     </task>
     <servers />
   </component>
