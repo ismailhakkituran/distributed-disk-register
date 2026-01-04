@@ -17,3 +17,6 @@ Bu aşamada , iki bilgisayarın birbiriyle anlaşabilmesi için ortak dil belirl
 
 Bu aşamada , önce sisteme esneklik kazandırmak için kaç kişiye göndereceğimizi  kodun içine yazmak yerine tolerance.conf diye bir ayar dosyası oluşturduk . Sunucu başlarken bu dosyayı okuyor ve lider , tolerance değerine göre yedekleme yapıyor. NodeMain sınıfına distributionMap adında bir harita (Map) ekledik. Bu sayede lider veriyi diğer node'lara  başarıyla gönderdiyse bu haritaya not düşüyor . Ayrıca liderin diğer üyelere paket taşımasını sağlayan fonksiyonu da yazdık bu fonksiyon önce tüm üyelerin listesini alıyor ama kendini çıkartıyor , kalan üyeler arasından tolerance sayısı kadar yedek sunucu seçiyor . Sonra seçilen bu sunuculara  Store servsi üzerinden bağlanıp veriyi gönderiyor. Seçilen sunucular okeylerse lider bunu not kaydediyor.
 
+6. Aşama - Dinamik Hata Toleransı ve Yük Dengeleme (Load Balancing)
+
+Bu aşamada , sistemimiz statik bir veri saklama yapısından akıllı ve dinamik bir dağıtık mimariye dönüştürülmüştür. Hata Toleransı ve Yük Dengeleme (Load Balancing) mekanizması sayesinde, tolerance.conf dosyasından okunan 1 ile 7 arasındaki herhangi bir değer için sistemin kararlı çalışması sağlanmış ve verilerin düğümler arasında rastgele değil, belirli bir düzen içerisinde paylaştırılması hedeflenmiştir.
