@@ -1,0 +1,73 @@
+syntax = "proto3";
+package family;
+
+// Mesajı temsil eden yapı
+message ChatMessage {
+	int32 message_id = 1;
+	string message = 2;
+}
+
+// Mesajı kaydeden üye bilgisi
+message NodeInfo {
+	int32 node_id = 1;
+	string address = 2;
+	repeated int32 stored_message_ids = 3;
+}
+
+// Mesajı kaydeden üyelerin listesi
+message MessageNodes {
+	int32 message_id = 1;
+	repeated NodeInfo nodes = 2;
+}
+
+// Boş mesaj (ör. ping, basit cevaplar için)
+message Empty {}
+
+// Mesaj kaydetme isteği
+message StoreRequest {
+	ChatMessage chat_message = 1;
+}
+
+// Mesaj kaydetme cevabı
+message StoreResponse {
+	bool success = 1;
+	string error = 2;
+	repeated NodeInfo stored_nodes = 3;
+}
+
+// Mesajı getirme isteği
+message GetRequest {
+	int32 message_id = 1;
+}
+
+// Mesajı getirme cevabı
+message GetResponse {
+	ChatMessage chat_message = 1;
+	repeated NodeInfo nodes = 2;
+	bool found = 3;
+}
+
+// Üye kaydı/güncelleme isteği
+message RegisterNodeRequest {
+	NodeInfo node_info = 1;
+}
+
+// Üye kaydı/güncelleme cevabı
+message RegisterNodeResponse {
+	bool success = 1;
+	string error = 2;
+}
+
+// Aile üyeleri ve mesajlar için servis
+service FamilyService {
+	// Mesajı aile üyelerine dağıt ve kaydet
+	rpc StoreMessage (StoreRequest) returns (StoreResponse);
+	// Mesajı id ile getir
+	rpc GetMessage (GetRequest) returns (GetResponse);
+	// Üye kaydı/güncelleme
+	rpc RegisterNode (RegisterNodeRequest) returns (RegisterNodeResponse);
+	// Sistemdeki tüm üyeleri getir
+	rpc ListNodes (Empty) returns (stream NodeInfo);
+	// Sistemdeki tüm mesajları getir
+	rpc ListMessages (Empty) returns (stream ChatMessage);
+}
