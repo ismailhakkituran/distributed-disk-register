@@ -125,14 +125,19 @@ public class NodeMain {
                                 .collect(java.util.stream.Collectors.toList());
 
 
-                        java.util.Collections.shuffle(others);
 
                         int distributedCount = 0;
-                        for (int i = 0; i < TOLERANCE && i < others.size(); i++) {
-                            family.NodeInfo target = others.get(i);
-                            if (sendStoreRequest(target, sc)) {
-                                savedNodes.add(target);
-                                distributedCount++;
+                        if (!others.isEmpty()) {
+                            int startIndex = sc.id() % others.size();
+
+                            for (int i = 0; i < others.size() && distributedCount < TOLERANCE; i++) {
+                                int targetIndex = (startIndex + i) % others.size();
+                                family.NodeInfo target = others.get(targetIndex);
+
+                                if (sendStoreRequest(target, sc)) {
+                                    savedNodes.add(target);
+                                    distributedCount++;
+                                }
                             }
                         }
 
@@ -161,12 +166,18 @@ public class NodeMain {
 
                         String foundContent = null;
                         for (family.NodeInfo owner : owners) {
-                            // Kendine tekrar sorma
                             if (owner.getPort() == self.getPort()) continue;
 
-                            // Üyeden mesajı gRPC ile iste (Aşama 4'ün retrieve RPC'si)
+                            System.out.println("🔍 Mesaj " + owner.getPort() + " portundan isteniyor...");
                             foundContent = fetchFromMember(owner, gc.id());
-                            if (foundContent != null && !foundContent.equals("NOT_FOUND")) break;
+
+                            // Eğer üye crash olmuşsa veya ulaşılmazsa foundContent null döner
+                            if (foundContent != null && !foundContent.equals("NOT_FOUND")) {
+                                System.out.println("✅ Mesaj yedek üyeden başarıyla alındı.");
+                                break;
+                            } else {
+                                System.out.println("⚠️ Üye cevap vermedi veya mesajı bulamadı, sıradaki yedeğe geçiliyor...");
+                            }
                         }
 
                         if (foundContent != null) {
@@ -269,14 +280,25 @@ public class NodeMain {
             System.out.println("======================================");
             System.out.printf("Family at %s:%d (me)%n", self.getHost(), self.getPort());
             System.out.println("Time: " + LocalDateTime.now());
-            System.out.println("Members:");
 
+
+            if (isLeader) {
+                System.out.println("Sistem Mesaj Dağılım İstatistikleri:");
+
+                java.util.Map<String, Long> counts = new java.util.HashMap<>();
+                messageLocationMap.values().forEach(nodes -> {
+                    nodes.forEach(n -> {
+                        String key = n.getHost() + ":" + n.getPort();
+                        counts.put(key, counts.getOrDefault(key, 0L) + 1);
+                    });
+                });
+                counts.forEach((node, count) -> System.out.printf("   > %s : %d mesaj saklıyor%n", node, count));
+            }
+
+            System.out.println("Members:");
             for (NodeInfo n : members) {
                 boolean isMe = n.getHost().equals(self.getHost()) && n.getPort() == self.getPort();
-                System.out.printf(" - %s:%d%s%n",
-                        n.getHost(),
-                        n.getPort(),
-                        isMe ? " (me)" : "");
+                System.out.printf(" - %s:%d%s%n", n.getHost(), n.getPort(), isMe ? " (me)" : "");
             }
             System.out.println("======================================");
         }, 3, PRINT_INTERVAL_SECONDS, TimeUnit.SECONDS);
