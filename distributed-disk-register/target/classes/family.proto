@@ -27,6 +27,23 @@ message ChatMessage {
 service FamilyService {
   rpc Join (NodeInfo) returns (FamilyView);
   rpc GetFamily (Empty) returns (FamilyView);
-
   rpc ReceiveChat (ChatMessage) returns (Empty);
+}
+
+message StoredMessage {
+  int32 id = 1;
+  string text = 2;
+}
+
+message StoreResult {
+  bool success = 1;
+}
+
+message MessageId {
+  int32 id = 1;
+}
+
+service StorageService {
+  rpc Store (StoredMessage) returns (StoreResult);
+  rpc Retrieve (MessageId) returns (StoredMessage);
 }
